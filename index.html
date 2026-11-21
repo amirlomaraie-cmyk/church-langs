@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أرشيف محاضرات اللغات الكنسية | د. جرجس بشري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #fbf9f5;
+            --bg-header: #1a2436;
+            --bg-card: #ffffff;
+            --primary: #1a2436;
+            --accent: #c59b27;
+            --accent-light: #fdf8e2;
+            --text-dark: #2c3e50;
+            --text-gray: #64748b;
+            --border: #e6dec9;
+            --success: #27ae60;
+            --success-light: #eafaf1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-1 { animation: fadeInUp 0.8s ease forwards; }
+        .fade-in-2 { animation: fadeInUp 0.8s ease 0.2s forwards; opacity: 0; }
+        .fade-in-3 { animation: fadeInUp 0.8s ease 0.4s forwards; opacity: 0; }
+        .fade-in-4 { animation: fadeInUp 0.8s ease 0.6s forwards; opacity: 0; }
+
+        /* الشريط العلوي الرئيسي */
+        .main-navbar {
+            background-color: var(--bg-header);
+            color: #f8fafc;
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .nav-right-group {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            min-width: 0;
+        }
+
+        .hamburger-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.3rem;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+
+        .hamburger-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            min-width: 0;
+        }
+
+        .nav-brand h1 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #f3d47d;
+            line-height: 1.3;
+        }
+
+        .nav-brand p {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            line-height: 1.3;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-item-btn {
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            padding: 0.5rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-item-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        /* القائمة الجانبية */
+        .side-drawer {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            max-width: 85vw;
+            height: 100%;
+            background-color: var(--bg-header);
+            color: white;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+            z-index: 2000;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            overflow-y: auto;
+            border-left: 2px solid var(--accent);
+        }
+
+        .side-drawer.open { right: 0; }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .drawer-header h3 { color: #f3d47d; font-size: 1.1rem; }
+        .close-drawer { background: transparent; border: none; color: #cbd5e1; font-size: 1.5rem; cursor: pointer; }
+
+        .drawer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .drawer-links button {
+            background: rgba(255,255,255,0.05);
+            border: none;
+            color: #cbd5e1;
+            text-align: right;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .drawer-links button:hover { background: var(--accent); color: white; }
+        .drawer-section-title { font-size: 0.75rem; font-weight: 800; color: #f3d47d; margin-top: 1rem; margin-bottom: 0.25rem; text-transform: uppercase; }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1500; display: none;
+        }
+        .drawer-overlay.open { display: block; }
+
+        /* القوائم المنسدلة */
+        .dropdown { position: relative; display: inline-block; z-index: 1050; }
+        .dropbtn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #f8fafc; padding: 0.5rem 1rem; border-radius: 8px;
+            font-size: 0.9rem; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; gap: 0.4rem; transition: 0.2s;
+        }
+        .dropbtn:hover, .dropdown.active .dropbtn { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+        .dropdown-content {
+            display: none; position: absolute; right: 0; top: 100%;
+            background-color: var(--bg-card); min-width: 240px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15); border-radius: 12px;
+            z-index: 1200; border: 1px solid var(--border); padding: 0.5rem; margin-top: 0.4rem;
+        }
+        .dropdown.active .dropdown-content { display: block; }
+        .dropdown-content button {
+            width: 100%; text-align: right; background: transparent; border: none;
+            padding: 0.65rem 0.9rem; font-size: 0.88rem; font-weight: 600;
+            color: var(--text-dark); border-radius: 8px; cursor: pointer; transition: 0.15s;
+        }
+        .dropdown-content button:hover { background: var(--accent-light); color: #8a6a12; }
+        .dropdown-divider-sub { height: 1px; background: var(--border); margin: 0.3rem 0; }
+        .dropdown-header-label { font-size: 0.75rem; font-weight: 800; color: var(--accent); padding: 0.4rem 0.9rem 0.2rem; text-transform: uppercase; }
+
+        /* الشريط الفرعي */
+        .sub-bar {
+            background: var(--bg-card);
+            padding: 0.75rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .sub-bar-lang {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .sub-bar-badge {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 0.35rem 0.95rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        /* شريط الصفحات الرئيسية بقوائم منسدلة على الموبايل */
+        .mobile-quick-pages {
+            display: none;
+        }
+
+        /* زر الرجوع */
+        .back-btn-container { padding: 0.75rem 2rem 0; max-width: 1450px; width: 100%; margin: 0 auto; display: block; }
+        .back-action-btn {
+            background: var(--bg-card); border: 1px solid var(--border); color: var(--primary);
+            padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 700;
+            cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: 0.2s;
+        }
+        .back-action-btn:hover { background: var(--accent-light); color: #8a6a12; border-color: var(--accent); }
+        .back-action-btn.disabled-state {
+            opacity: 0.55;
+            cursor: default;
+        }
+        .back-action-btn.disabled-state:hover {
+            background: var(--bg-card);
+            color: var(--primary);
+            border-color: var(--border);
+        }
+
+        /* مساحة العمل */
+        .workspace {
+            padding: 1rem 2rem 2rem; display: grid; grid-template-columns: 2.2fr 1fr;
+            gap: 1.75rem; max-width: 1450px; width: 100%; margin: 0 auto; flex: 1;
+        }
+
+        /* الصفحة الرئيسية */
+        .home-profile-card {
+            background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border);
+            padding: 2.5rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); grid-column: 1 / -1; text-align: center;
+        }
+        .profile-img-container {
+            width: 150px; height: 150px; margin: 0 auto 1.5rem; border-radius: 50%;
+            overflow: hidden; border: 4px solid var(--accent); background: #e2e8f0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .profile-img-container img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-placeholder-icon { font-size: 3.5rem; color: var(--text-gray); }
+        .home-profile-card h2 { font-size: 1.8rem; color: var(--primary); margin-bottom: 0.4rem; font-weight: 800; }
+        .home-profile-card .subtitle { font-size: 1.05rem; color: var(--accent); font-weight: 700; margin-bottom: 0.65rem; }
+        .home-profile-card .contact-emails {
+            font-size: 0.92rem;
+            color: var(--text-gray);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            direction: ltr;
+            unicode-bidi: isolate;
+        }
+        .home-profile-card .bio-list {
+            list-style: none;
+            font-size: 1rem;
+            line-height: 1.9;
+            color: #334155;
+            max-width: 860px;
+            margin: 0 auto 2rem;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        .home-profile-card .bio-list li {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            border-right: 3px solid var(--accent);
+            border-radius: 10px;
+            padding: 0.7rem 1rem;
+        }
+
+        .home-action-buttons {
+            display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+        }
+        .lang-redirect-btn {
+            background: var(--primary); color: white; border: none; padding: 0.9rem 1.8rem;
+            border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .lang-redirect-btn.greek { background: linear-gradient(135deg, #1a2436, #0f172a); order: 1; }
+        .lang-redirect-btn.coptic { background: linear-gradient(135deg, #b8860b, #966f07); order: 2; }
+        .lang-redirect-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+
+        /* لوحات المحتوى والمستويات */
+        .levels-selection-panel, .content-panel, .player-card, .playlist-panel, .level-lectures-panel {
+            background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border);
+            padding: 2rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); grid-column: 1 / -1; display: none;
+        }
+        .levels-selection-panel h2, .content-panel h2, .level-lectures-panel h2 {
+            font-size: 1.4rem; color: var(--primary); margin-bottom: 1.25rem; font-weight: 800; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; display: inline-block;
+        }
+        .levels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1rem; }
+        .level-box-card {
+            background: var(--bg-body); border: 1px solid var(--border); padding: 1.2rem;
+            border-radius: 12px; text-align: center; cursor: pointer; font-weight: 700; color: var(--primary); transition: all 0.2s;
+        }
+        .level-box-card:hover { background: var(--accent-light); border-color: var(--accent); color: #8a6a12; transform: translateY(-2px); }
+
+        /* بطاقات المحاضرات داخل المستوى مع الأزرار */
+        .level-lectures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 1.15rem;
+            margin-top: 0.5rem;
+        }
+        .lecture-overview-card {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--accent);
+            border-radius: 14px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.9rem;
+            transition: all 0.2s;
+        }
+        .lecture-overview-card.reviewed-card {
+            border-right-color: var(--success);
+            background: #f6fcf8;
+        }
+        .lecture-overview-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        }
+        .lecture-overview-header h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.5;
+            margin-bottom: 0.25rem;
+        }
+        .lecture-overview-header span {
+            font-size: 0.82rem;
+            color: var(--text-gray);
+            display: block;
+        }
+        .resume-badge {
+            display: inline-block;
+            margin-top: 0.45rem;
+            background: #eef2ff;
+            color: #3730a3;
+            border: 1px solid #c7d2fe;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.2rem 0.65rem;
+            border-radius: 6px;
+        }
+        .lecture-overview-actions {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .lec-btn-contents {
+            flex: 1;
+            min-width: 135px;
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            color: #8a6a12;
+            padding: 0.6rem 0.85rem;
+            border-radius: 9px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .lec-btn-contents:hover, .lec-btn-contents.active {
+            background: var(--accent-light);
+        }
+        .lec-btn-watch {
+            flex: 1;
+            min-width: 135px;
+            background: var(--primary);
+            border: 1px solid var(--primary);
+            color: #ffffff;
+            padding: 0.6rem 0.85rem;
+            border-radius: 9px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .lec-btn-watch:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* زر تمت المُراجعة */
+        .lec-btn-review {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1.5px solid #cbd5e1;
+            color: var(--text-gray);
+            padding: 0.55rem 0.85rem;
+            border-radius: 9px;
+            font-size: 0.86rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+        }
+        .lec-btn-review:hover {
+            border-color: var(--success);
+            color: var(--success);
+            background: var(--success-light);
+        }
+        .lec-btn-review.is-reviewed {
+            background: var(--success);
+            border-color: var(--success);
+            color: #ffffff;
+        }
+        .lec-btn-review.is-reviewed:hover {
+            background: #219150;
+            border-color: #219150;
+            color: #ffffff;
+        }
+
+        .lecture-inline-contents {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.85rem 1rem;
+            font-size: 0.88rem;
+            color: #334155;
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+        .lecture-inline-contents.open {
+            display: block;
+        }
+
+        .resource-card {
+            background: var(--bg-body); border: 1px solid var(--border); padding: 1.15rem 1.25rem;
+            border-radius: 12px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+        }
+        .resource-card button { background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 8px; border: none; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: 0.2s; flex-shrink: 0; }
+        .resource-card button:hover { background: #b08822; }
+
+        /* وضع التكبير للقراءة داخل نفس الصفحة */
+        .player-card.expanded-reader {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            border-radius: 0;
+            padding: 1rem;
+            display: flex !important;
+            flex-direction: column;
+            background: var(--bg-card);
+            overflow-y: auto;
+        }
+        .player-card.expanded-reader .video-container {
+            flex: 1;
+            min-height: 75vh;
+            padding-bottom: 0;
+        }
+
+        /* حاوية المشغل ودعم وضع ملء الشاشة */
+        .player-stage {
+            position: relative;
+            width: 100%;
+            background: #090d16;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+        }
+
+        .player-stage:fullscreen,
+        .player-stage:-webkit-full-screen {
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #000000;
+        }
+
+        .player-stage:fullscreen .video-container,
+        .player-stage:-webkit-full-screen .video-container {
+            padding-bottom: 0;
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+        }
+
+        .player-stage:fullscreen .custom-controls,
+        .player-stage:-webkit-full-screen .custom-controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 2147483647;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(6px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .player-stage:fullscreen.controls-hidden .custom-controls,
+        .player-stage:-webkit-full-screen.controls-hidden .custom-controls {
+            opacity: 0;
+            transform: translateY(100%);
+            pointer-events: none;
+        }
+
+        /* عارض المحتوى والمشغل */
+        .video-container { position: relative; padding-bottom: 65%; height: 0; background: #090d16; overflow: hidden; border-radius: 12px 12px 0 0; }
+        .video-container iframe, .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        /* زر التكبير داخل فرايم الكتاب أو الموقع فقط */
+        .frame-expand-btn {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 20;
+            background: rgba(26, 36, 54, 0.9);
+            color: #ffffff;
+            border: 1px solid var(--accent);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: all 0.2s;
+            display: none;
+        }
+        .frame-expand-btn:hover {
+            background: var(--accent);
+            color: #ffffff;
+        }
+        
+        .video-click-shield {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.15);
+            user-select: none;
+        }
+        .video-click-shield.playing { background: transparent; }
+        .play-overlay-btn {
+            width: 68px; height: 68px; border-radius: 50%; background: rgba(197, 155, 39, 0.92);
+            color: white; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .video-click-shield.playing .play-overlay-btn { opacity: 0; transform: scale(0.8); }
+
+        .custom-controls { position: relative; background: var(--bg-header); color: white; padding: 0.75rem 1.25rem 0.9rem; display: flex; flex-direction: column; gap: 0.65rem; z-index: 15; }
+        .scrub-preview-shield {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: transparent;
+            cursor: grabbing;
+        }
+        .scrub-preview-shield.active {
+            display: block;
+        }
+        .timeline-wrapper { position: relative; z-index: 1001; display: flex; align-items: center; gap: 0.75rem; direction: ltr; }
+        .time-display { font-size: 0.82rem; font-weight: 700; color: #cbd5e1; min-width: 58px; text-align: center; font-variant-numeric: tabular-nums; }
+        .progress-slider { -webkit-appearance: none; appearance: none; flex: 1; height: 6px; background: rgba(255, 255, 255, 0.2); border-radius: 5px; outline: none; cursor: pointer; }
+        .progress-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 15px; height: 15px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+        .controls-row { position: relative; z-index: 1001; display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+        .ctrl-group { display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center; }
+        .ctrl-btn { background: rgba(255, 255, 255, 0.12); border: none; color: white; padding: 0.4rem 0.85rem; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .ctrl-btn:hover { background: var(--accent); }
+
+        /* عناصر التحكم في الصوت */
+        .volume-control-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.25rem 0.65rem;
+            border-radius: 8px;
+            direction: ltr;
+        }
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 78px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #f3d47d;
+            cursor: pointer;
+        }
+        .volume-percent {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            min-width: 34px;
+            text-align: center;
+        }
+
+        .lecture-body { padding: 1.5rem; }
+        .lecture-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; }
+        .tag { display: inline-block; background: var(--accent-light); color: #8a6a12; font-size: 0.8rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 0.35rem; }
+        .lecture-title { font-size: 1.3rem; font-weight: 800; color: var(--text-dark); }
+        .lecture-date { font-size: 0.85rem; color: var(--text-gray); margin-top: 0.25rem; }
+
+        .player-review-btn {
+            background: var(--bg-body);
+            border: 1.5px solid #cbd5e1;
+            color: var(--text-gray);
+            padding: 0.55rem 1.1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+        .player-review-btn:hover {
+            border-color: var(--success);
+            color: var(--success);
+            background: var(--success-light);
+        }
+        .player-review-btn.is-reviewed {
+            background: var(--success);
+            border-color: var(--success);
+            color: #ffffff;
+        }
+
+        .lesson-topics-box { margin-top: 1.35rem; padding: 1.15rem 1.35rem; background: var(--bg-body); border: 1px solid var(--border); border-right: 4px solid var(--accent); border-radius: 12px; display: none; }
+        
+        .playlist-panel { grid-column: auto; height: fit-content; display: none; }
+        .playlist-title { font-size: 1.05rem; font-weight: 800; padding-bottom: 0.9rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .lectures-stack { display: flex; flex-direction: column; gap: 0.65rem; max-height: 550px; overflow-y: auto; }
+        .lec-card { padding: 0.9rem 1rem; border-radius: 11px; border: 1px solid var(--border); cursor: pointer; display: flex; flex-direction: column; gap: 0.55rem; transition: all 0.2s; background: var(--bg-body); }
+        .lec-card:hover, .lec-card.active { border-color: var(--accent); background: var(--accent-light); }
+        .lec-card.reviewed-card { border-right: 4px solid var(--success); }
+        .lec-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+        .lec-card h4 { font-size: 0.92rem; font-weight: 700; color: var(--text-dark); }
+        .lec-card span { font-size: 0.78rem; color: var(--text-gray); display: block; }
+        .mini-review-btn {
+            align-self: flex-start;
+            background: var(--bg-card);
+            border: 1px solid #cbd5e1;
+            color: var(--text-gray);
+            padding: 0.28rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .mini-review-btn:hover {
+            border-color: var(--success);
+            color: var(--success);
+        }
+        .mini-review-btn.is-reviewed {
+            background: var(--success);
+            border-color: var(--success);
+            color: #ffffff;
+        }
+
+        @media (max-width: 1200px) {
+            .workspace { grid-template-columns: 1fr; padding: 1rem; }
+        }
+
+        @media (max-width: 768px) {
+            .main-navbar { padding: 0.7rem 1rem; }
+            .nav-menu { display: none; }
+            .nav-brand h1 { font-size: 1rem; }
+            .nav-brand p { font-size: 0.75rem; }
+            .sub-bar { padding: 0.65rem 1rem; }
+            .sub-bar-lang, .sub-bar-badge { font-size: 0.82rem; }
+
+            .mobile-quick-pages {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.65rem 1rem;
+                background: var(--bg-card);
+                border-bottom: 1px solid var(--border);
+                flex-wrap: wrap;
+                position: relative;
+                z-index: 950;
+            }
+
+            .mobile-home-btn {
+                background: var(--accent-light);
+                border: 1px solid var(--accent);
+                color: #8a6a12;
+                padding: 0.42rem 0.78rem;
+                border-radius: 9px;
+                font-size: 0.8rem;
+                font-weight: 800;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .mobile-quick-pages .dropdown {
+                position: relative;
+            }
+
+            .mobile-quick-pages .dropbtn {
+                background: var(--bg-body);
+                border: 1px solid var(--border);
+                color: var(--primary);
+                padding: 0.42rem 0.75rem;
+                border-radius: 9px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            }
+
+            .mobile-quick-pages .dropdown.active .dropbtn,
+            .mobile-quick-pages .dropbtn:hover {
+                background: var(--accent);
+                border-color: var(--accent);
+                color: #ffffff;
+            }
+
+            .mobile-quick-pages .dropdown-content {
+                position: fixed;
+                top: auto;
+                left: 1rem;
+                right: 1rem;
+                min-width: unset;
+                width: auto;
+                margin-top: 0.45rem;
+                z-index: 1200;
+                border-radius: 14px;
+                box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
+                padding: 0.6rem;
+            }
+
+            .mobile-quick-pages .dropdown-content button {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+                border-radius: 10px;
+            }
+
+            .back-btn-container { padding: 0.75rem 1rem 0; }
+            .workspace { padding: 0.85rem 1rem 1.75rem; gap: 1.1rem; }
+            .home-profile-card, .levels-selection-panel, .content-panel, .player-card, .playlist-panel, .level-lectures-panel {
+                padding: 1.35rem 1rem; border-radius: 14px;
+            }
+            .profile-img-container { width: 120px; height: 120px; margin-bottom: 1.1rem; }
+            .home-profile-card h2 { font-size: 1.45rem; }
+            .home-profile-card .subtitle { font-size: 0.95rem; margin-bottom: 0.4rem; }
+            .home-profile-card .contact-emails { font-size: 0.82rem; margin-bottom: 1rem; }
+            .home-profile-card .bio-list { font-size: 0.92rem; line-height: 1.8; margin-bottom: 1.4rem; gap: 0.5rem; }
+            .home-action-buttons { flex-direction: column; gap: 0.8rem; margin-top: 1.25rem; }
+            .lang-redirect-btn { width: 100%; padding: 0.85rem 1.2rem; font-size: 0.95rem; }
+            .levels-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .level-box-card { padding: 1rem 0.65rem; font-size: 0.9rem; }
+            .level-lectures-grid { grid-template-columns: 1fr; }
+            .video-container { padding-bottom: 75%; }
+            .lecture-body { padding: 1.1rem; }
+            .lecture-title { font-size: 1.1rem; }
+            .volume-slider { width: 60px; }
+        }
+    </style>
+</head>
+<body onclick="closeAllDropdowns()">
+
+    <div class="scrub-preview-shield" id="scrubPreviewShield"></div>
+
+    <!-- القائمة الجانبية -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleSidebar()"></div>
+    <div class="side-drawer" id="sideDrawer">
+        <div class="drawer-header">
+            <h3>قوائم الموقع</h3>
+            <button class="close-drawer" onclick="toggleSidebar()">✕</button>
+        </div>
+        <div class="drawer-links">
+            <button onclick="showHomePage(); toggleSidebar();">👤 الرئيسية (د. جرجس بشري)</button>
+            
+            <div class="drawer-section-title">اللغة اليونانية</div>
+            <button onclick="openLevelsPage('greek'); toggleSidebar();">📂 محاضرات اللغة اليونانية</button>
+            <button onclick="showSpecialPage('books-greek'); toggleSidebar();">📚 كُتب اللغة اليونانية</button>
+            <button onclick="showSpecialPage('dicts-greek'); toggleSidebar();">🔍 قواميس ومواقع اليونانية</button>
+
+            <div class="drawer-section-title">اللغة القبطية</div>
+            <button onclick="openLevelsPage('coptic'); toggleSidebar();">📂 محاضرات اللغة القبطية</button>
+            <button onclick="showSpecialPage('books-coptic'); toggleSidebar();">📖 كُتب اللغة القبطية</button>
+            <button onclick="showSpecialPage('dicts-coptic'); toggleSidebar();">🔎 قواميس ومواقع القبطية</button>
+        </div>
+    </div>
+
+    <!-- الشريط العلوي الرئيسي -->
+    <header class="main-navbar">
+        <div class="nav-right-group">
+            <button class="hamburger-btn" onclick="toggleSidebar()" title="القائمة الجانبية">☰</button>
+            <div class="nav-brand" onclick="showHomePage()">
+                <h1>أرشيف اللغات الكنسية</h1>
+                <p>د. جرجس بشري</p>
+            </div>
+        </div>
+        
+        <div class="nav-menu">
+            <button class="nav-item-btn" onclick="showHomePage()">👤 الرئيسية</button>
+
+            <div class="dropdown" id="greekDropdown" onclick="event.stopPropagation()">
+                <button type="button" class="dropbtn" onclick="toggleDropdown(event, 'greekDropdown')">اللغة اليونانية ▾</button>
+                <div class="dropdown-content">
+                    <button type="button" onclick="openLevelsPage('greek')">📂 المُحاضرات</button>
+                </div>
+            </div>
+
+            <div class="dropdown" id="copticDropdown" onclick="event.stopPropagation()">
+                <button type="button" class="dropbtn" onclick="toggleDropdown(event, 'copticDropdown')">اللغة القبطية ▾</button>
+                <div class="dropdown-content">
+                    <button type="button" onclick="openLevelsPage('coptic')">📂 المُحاضرات</button>
+                </div>
+            </div>
+
+            <div class="dropdown" id="booksDropdown" onclick="event.stopPropagation()">
+                <button type="button" class="dropbtn" onclick="toggleDropdown(event, 'booksDropdown')">📚 كُتُب اللغات ▾</button>
+                <div class="dropdown-content">
+                    <button type="button" onclick="showSpecialPage('books-greek')">📚 كُتب اللغة اليونانية</button>
+                    <div class="dropdown-divider-sub"></div>
+                    <button type="button" onclick="showSpecialPage('books-coptic')">📖 كُتب اللغة القبطية</button>
+                </div>
+            </div>
+
+            <div class="dropdown" id="dictsDropdown" onclick="event.stopPropagation()">
+                <button type="button" class="dropbtn" onclick="toggleDropdown(event, 'dictsDropdown')">🔍 قواميس ومواقع ▾</button>
+                <div class="dropdown-content">
+                    <div class="dropdown-header-label">اللغة اليونانية</div>
+                    <button type="button" onclick="showSpecialPage('dicts-greek')">🔍 قواميس ومواقع اليونانية</button>
+                    <div class="dropdown-divider-sub"></div>
+                    <div class="dropdown-header-label">اللغة القبطية</div>
+                    <button type="button" onclick="showSpecialPage('dicts-coptic')">🔎 قواميس ومواقع القبطية</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- شريط معلومات القسم الحالي -->
+    <div class="sub-bar" id="subBarContainer">
+        <span class="sub-bar-lang" id="currentActiveLangLabel">الصفحة الرئيسية</span>
+        <div class="sub-bar-badge" id="levelIndicator">مرحباً بكم</div>
+    </div>
+
+    <!-- الصفحات الرئيسية بقوائم منسدلة على الموبايل بجوار الرئيسية -->
+    <nav class="mobile-quick-pages" id="mobileQuickPages" aria-label="الصفحات الرئيسية" onclick="event.stopPropagation()">
+        <button type="button" class="mobile-home-btn" onclick="showHomePage()">👤 الرئيسية</button>
+
+        <div class="dropdown" id="mGreekDropdown">
+            <button type="button" class="dropbtn" onclick="toggleDropdown(event, 'mGreekDropdown')">اليونانية ▾</button>
+            <div class="dropdown-content">
+                <button type="button" onclick="openLevelsPage('greek'); closeAllDropdowns();">📂 المُحاضرات</button>
+            </div>
+        </div>
+
+        <div class="dropdown" id="mCopticDropdown">
+            <button type="button" class="dropbtn" onclick="toggleDropdown(event, 'mCopticDropdown')">القبطية ▾</button>
+            <div class="dropdown-content">
+                <button type="button" onclick="openLevelsPage('coptic'); closeAllDropdowns();">📂 المُحاضرات</button>
+            </div>
+        </div>
+
+        <div class="dropdown" id="mBooksDropdown">
+            <button type="button" class="dropbtn" onclick="toggleDropdown(event, 'mBooksDropdown')">📚 الكُتب ▾</button>
+            <div class="dropdown-content">
+                <button type="button" onclick="showSpecialPage('books-greek'); closeAllDropdowns();">📚 كُتب اللغة اليونانية</button>
+                <div class="dropdown-divider-sub"></div>
+                <button type="button" onclick="showSpecialPage('books-coptic'); closeAllDropdowns();">📖 كُتب اللغة القبطية</button>
+            </div>
+        </div>
+
+        <div class="dropdown" id="mDictsDropdown">
+            <button type="button" class="dropbtn" onclick="toggleDropdown(event, 'mDictsDropdown')">🔍 قواميس ومواقع ▾</button>
+            <div class="dropdown-content">
+                <div class="dropdown-header-label">اللغة اليونانية</div>
+                <button type="button" onclick="showSpecialPage('dicts-greek'); closeAllDropdowns();">🔍 قواميس ومواقع اليونانية</button>
+                <div class="dropdown-divider-sub"></div>
+                <div class="dropdown-header-label">اللغة القبطية</div>
+                <button type="button" onclick="showSpecialPage('dicts-coptic'); closeAllDropdowns();">🔎 قواميس ومواقع القبطية</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- زر الرجوع التلقائي (مفعّل في جميع الصفحات) -->
+    <div class="back-btn-container" id="backBtnContainer">
+        <button type="button" class="back-action-btn" id="backActionBtn" onclick="goBack()">⬅ رجوع للخلف</button>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="workspace">
+        
+        <!-- الصفحة الرئيسية -->
+        <div id="homeProfileCard" class="home-profile-card">
+            <div class="profile-img-container fade-in-1">
+                <img id="drPhoto" src="https://i.ibb.co/bRCHc5zQ/464234365-8604047663012801-80798516664249862-n.jpg" alt="د. جرجس بشري حنا غالي" onerror="this.style.display='none'; document.getElementById('fallbackIcon').style.display='block';">
+                <span id="fallbackIcon" class="profile-placeholder-icon" style="display:none;">👨‍🏫</span>
+            </div>
+            <h2 class="fade-in-2">جرجس بشرى حنا غالي</h2>
+            <div class="subtitle fade-in-3">باحث وأستاذ في اللغات الكنسية والبرديات والنقوش</div>
+            <div class="contact-emails fade-in-3">girgisboshra2015@yahoo.com | girgis.boshra@ainshams.edu.eg</div>
+
+            <ul class="bio-list fade-in-4">
+                <li>مواليد قرية الجزائر - مركز سمالوط - محافظة المنيا (ديسمبر ١٩٧٨).</li>
+                <li>ليسانس الآداب، كلية الآداب، جامعة القاهرة، قسم الدراسات اليونانية واللاتينية (١٩٩٩).</li>
+                <li>درس اللغة اليونانية الحديثة بجامعة قبرص، نيقوسيا (١٩٩٩).</li>
+                <li>دبلوم معهد الدراسات القبطية، قسم اللغة القبطية وآدابها، بتقدير جيد جدًا (٢٠٠٠).</li>
+                <li>ماجستير في علم اللغة من قسم الدراسات اليونانية واللاتينية، بكلية الآداب، جامعة القاهرة، بعنوان: «دراسة تقابلية للمحتوى اللغوي لرسائل القديس آمون بين اليونانية والسريانية» بتقدير ممتاز مع التوصية بطبع الرسالة وتبادلها مع الجامعات الأخرى (٢٠٠٥/٢٠٠٤).</li>
+                <li>دكتوراه في علم اللغة من قسم الدراسات اليونانية واللاتينية، بكلية الآداب، جامعة القاهرة، بعنوان: «دراسة تقابلية لاسمي الفاعل والمفعول والمصدر في سفر المزامير بين اليونانية والسريانية والقبطية» مع مرتبة الشرف الأولى (٢٠٠٩/٢٠٠٨).</li>
+                <li>يعمل حاليًا في مركز الدراسات البردية والنقوش، كلية الآثار، بجامعة عين شمس، ومركز باناريون للتراث الآبائي.</li>
+                <li>عضو في الجمعية الدولية للدراسات القبطية (SAC)، والجمعية الدولية للدراسات الآبائية (AIEP/IAPS)، وممثل مصر لديها.</li>
+                <li>قام بتدريس اللغة اليونانية أو اللاتينية للباحثين وطلاب الدراسات العليا من جامعات مختلفة في: جامعة القاهرة، والمنصورة، وبني سويف، ومركز الدراسات البردية والنقوش بجامعة عين شمس، ومركز باناريون للتراث الآبائي.</li>
+                <li>قام بتدريس اللغة اليونانية أو القبطية أو اللاتينية في العديد من الكليات الإكليريكية والمعاهد اللاهوتية والأديرة، منها: كلية البابا شنودة الثالث الإكليريكية بشبرا الخيمة، وكلية اللاهوت الإنجيلية بالعباسية، وكلية العلوم الإنسانية واللاهوتية للأقباط الكاثوليك بالمعادي، والمركز الثقافي الفرنسيسكاني بالقاهرة، ومعهد الدراسات القبطية بالعباسية، والكلية الإكليريكية للأقباط الأرثوذكس بالأنبا رويس بالقاهرة، وجامعة هولي صوفيا بالولايات المتحدة الأمريكية.</li>
+                <li>محرر مجلة مركز الدراسات البردية والنقوش، كلية الآثار، جامعة عين شمس (BCPS)، ومجلة كلية الآثار، جامعة عين شمس (IWNW).</li>
+                <li>شارك في العديد من المؤتمرات العلمية المحلية والدولية، ونشر العديد من الأبحاث العلمية.</li>
+                <li>قام بمراجعة وتحرير العديد من الأبحاث والكتب.</li>
+                <li>شارك في الترجمة العربية للمشروع الدولي (DDGLC) قاعدة بيانات وقاموس الكلمات اليونانية في اللغة القبطية، جامعة برلين الحرة بألمانيا، ويشارك كمحرر للكلمات اليونانية واللاتينية الدخيلة على اللغة السريانية في المشروع الدولي للقاموس السرياني (SIMTHO).</li>
+                <li><strong>من أهم المؤلفات:</strong> «اللغة اليونانية في ليتورجية الكنيسة القبطية»: «جبروت الحب» (ثلاثة أجزاء).</li>
+                <li><strong>من أهم الأعمال المترجمة إلى اللغة العربية:</strong>
+                    <br>• عن الإنجليزية: الكلمات اليونانية في اللغة القبطية (رسالة دكتوراه قُدمت لجامعة مانشستر، ونشرت بمعرفة جمعية الأنبا غريغوريوس).
+                    <br>• عن القبطية: «العهد الجديد، قبطي - عربي، ترجمة بين السطور» (بالاشتراك).
+                    <br>• عن اللاتينية: «عظات على سفر الخروج - العلامة أوريجينيس» (بالاشتراك).
+                    <br>• عن اليونانية القديمة: «الآباء الرسوليون» (بالاشتراك).
+                    <br>• قاموس يوناني - إنجليزي - عربي «هياموس»، المركز القومي للترجمة بالقاهرة (بالاشتراك).
+                </li>
+            </ul>
+
+            <div class="home-action-buttons fade-in-4">
+                <button class="lang-redirect-btn greek" onclick="openLevelsPage('greek')">الانتقال إلى محاضرات اللغة اليونانية</button>
+                <button class="lang-redirect-btn coptic" onclick="openLevelsPage('coptic')">الانتقال إلى محاضرات اللغة القبطية</button>
+            </div>
+        </div>
+
+        <!-- صفحة اختيار المستويات -->
+        <div id="levelsSelectionPanel" class="levels-selection-panel">
+            <h2 id="levelsSelectionTitle">اختر المستوى الدراسي</h2>
+            <div class="levels-grid" id="levelsGridContainer"></div>
+        </div>
+
+        <!-- صفحة عرض محاضرات المستوى المختار (قبل تشغيل الفيديو) -->
+        <div id="levelLecturesPanel" class="level-lectures-panel">
+            <h2 id="levelLecturesTitle">المحاضرات المتاحة</h2>
+            <div id="levelLecturesListBody"></div>
+        </div>
+
+        <!-- صفحة المحتوى الخاص (الكتب والمواقع المجلوبة من Supabase) -->
+        <div id="specialContentPanel" class="content-panel">
+            <div id="specialPanelBody"></div>
+        </div>
+
+        <!-- قسم عرض المحتوى (فيديو أو كتاب/موقع بداخل الصفحة) -->
+        <section class="player-card" id="videoSectionWrapper">
+            <div class="player-stage" id="playerStage">
+                <div class="video-container" id="videoBox" translate="no">
+                    <button type="button" class="frame-expand-btn" id="frameExpandBtn" onclick="toggleResourceExpand()">⛶ تكبير صفحة العرض للقراءة</button>
+                    <div id="ytPlayer" style="display:none;"></div>
+                    <video id="directPlayer" controlsList="nodownload nofullscreen noremoteplayback" disablePictureInPicture playsinline style="display:none;"></video>
+                    <iframe id="resourceEmbedViewer" style="display:none; width:100%; height:100%; background:#fff;" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+                    
+                    <div class="video-click-shield" id="clickShield" onclick="handleShieldClick(event)" ondblclick="handleShieldDoubleClick(event)" style="display:none;" title="انقر مرتين لتكبير أو تصغير الشاشة">
+                        <div class="play-overlay-btn" id="centerPlayIcon">▶</div>
+                    </div>
+                </div>
+
+                <!-- تحكم الفيديو (تظهر فقط للفيديو) -->
+                <div class="custom-controls" id="videoControlsBar">
+                    <div class="timeline-wrapper">
+                        <span class="time-display" id="currentTimeText">00:00</span>
+                        <input type="range" class="progress-slider" id="progressSlider" min="0" max="100" value="0" step="0.1" oninput="onSliderInput(this.value)" onchange="onSliderChange(this.value)">
+                        <span class="time-display" id="durationText">00:00</span>
+                    </div>
+
+                    <div class="controls-row">
+                        <div class="ctrl-group">
+                            <button type="button" class="ctrl-btn" onclick="togglePlayPause()" id="playPauseBtn">▶ تشغيل / إيقاف</button>
+                            <button type="button" class="ctrl-btn" onclick="seekVideo(-10)">⏪ 10ث</button>
+                            <button type="button" class="ctrl-btn" onclick="seekVideo(10)">10ث ⏩</button>
+                            <div class="volume-control-box" title="التحكم في الصوت">
+                                <button type="button" class="ctrl-btn" id="muteToggleBtn" onclick="toggleMute()" style="padding:0.25rem 0.5rem;">🔊</button>
+                                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100" oninput="onVolumeChange(this.value)">
+                                <span class="volume-percent" id="volumePercentText">100%</span>
+                            </div>
+                        </div>
+                        <div class="ctrl-group">
+                            <button type="button" class="ctrl-btn" id="fullscreenBtn" onclick="toggleFullscreen()">⛶ ملء الشاشة</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lecture-body">
+                <div class="lecture-top">
+                    <div>
+                        <span class="tag" id="lectureTag">جاري التحميل...</span>
+                        <h2 class="lecture-title" id="lectureTitle">اختر عنصراً للبدء</h2>
+                        <p class="lecture-date" id="lectureDate">د. جرجس بشري</p>
+                    </div>
+                    <button type="button" class="player-review-btn" id="playerReviewBtn" style="display:none;" onclick="toggleCurrentLectureReviewed()">
+                        ⬜ تمت المُراجعة
+                    </button>
+                </div>
+
+                <div class="lesson-topics-box" id="lessonTopicsBox">
+                    <div class="lesson-topics-title" style="font-size: 0.95rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">📋 عناصر الدرس</div>
+                    <div class="lesson-topics-content" id="lessonTopicsContent" style="font-size: 0.92rem; color: #334155; line-height: 1.85; white-space: pre-line;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قائمة العناصر الجانبية -->
+        <aside class="playlist-panel" id="playlistSectionWrapper">
+            <div class="playlist-title">
+                <span id="playlistHeader">المحاضرات</span>
+                <span id="playlistCount" style="font-size: 0.8rem; color: var(--text-gray);">0</span>
+            </div>
+            <div class="lectures-stack" id="lecturesStack"></div>
+        </aside>
+    </main>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        const SUPABASE_URL = 'https://lbsesqswjizxhtimuzan.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_XdBm9Pdk2MFq8QCrWTXjqQ_Rel5TKDz';
+
+        let currentLang = 'coptic';
+        let currentLevel = 1;
+        let currentLecturesList = [];
+        let currentLecture = null;
+        let player = null;
+        let isPlayerReady = false;
+        let isDraggingSlider = false;
+        let progressInterval = null;
+        let isYouTubeActive = false;
+        let historyStack = [{ type: 'home' }];
+        let pendingResumeTime = null;
+        let clickToggleTimer = null;
+        let currentVolume = 100;
+        let lastNonZeroVolume = 100;
+        let fullscreenHideTimer = null;
+
+        // --- إدارة حفظ حالة المراجعة ووقت التوقف في المتصفح ---
+        const STORAGE_REVIEWED_KEY = 'coptic_greek_reviewed_lectures_v1';
+        const STORAGE_PROGRESS_KEY = 'coptic_greek_lecture_progress_v1';
+
+        function getLectureStorageId(lec) {
+            if (!lec) return '';
+            if (lec.id !== undefined && lec.id !== null) return `id_${lec.id}`;
+            return `${lec.language || currentLang}_${lec.level || currentLevel}_${lec.youtube_id || lec.title}`;
+        }
+
+        function getReviewedMap() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_REVIEWED_KEY) || '{}');
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function isLectureReviewed(lec) {
+            const map = getReviewedMap();
+            return Boolean(map[getLectureStorageId(lec)]);
+        }
+
+        function toggleLectureReviewed(lec) {
+            const key = getLectureStorageId(lec);
+            if (!key) return false;
+            const map = getReviewedMap();
+            map[key] = !map[key];
+            if (!map[key]) delete map[key];
+            try {
+                localStorage.setItem(STORAGE_REVIEWED_KEY, JSON.stringify(map));
+            } catch (e) {}
+            return Boolean(map[key]);
+        }
+
+        function toggleCurrentLectureReviewed() {
+            if (!currentLecture) return;
+            toggleLectureReviewed(currentLecture);
+            updatePlayerReviewButton();
+            renderLecturesList(currentLecturesList);
+            if (document.getElementById('levelLecturesPanel').style.display !== 'none') {
+                renderLevelLecturesCards();
+            }
+        }
+
+        function updatePlayerReviewButton() {
+            const btn = document.getElementById('playerReviewBtn');
+            if (!btn || !currentLecture) return;
+            const reviewed = isLectureReviewed(currentLecture);
+            btn.classList.toggle('is-reviewed', reviewed);
+            btn.innerHTML = reviewed ? '✅ تمت المُراجعة' : '⬜ تمت المُراجعة';
+        }
+
+        function getProgressMap() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_PROGRESS_KEY) || '{}');
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function getSavedLectureTime(lec) {
+            const map = getProgressMap();
+            const val = map[getLectureStorageId(lec)];
+            return typeof val === 'number' && val > 2 ? val : 0;
+        }
+
+        function saveLectureTime(lec, currentTime, duration) {
+            if (!lec || typeof currentTime !== 'number' || isNaN(currentTime)) return;
+            const key = getLectureStorageId(lec);
+            if (!key) return;
+            const map = getProgressMap();
+            if (duration && duration > 15 && currentTime >= duration - 5) {
+                delete map[key];
+            } else if (currentTime > 2) {
+                map[key] = Math.floor(currentTime);
+            }
+            try {
+                localStorage.setItem(STORAGE_PROGRESS_KEY, JSON.stringify(map));
+            } catch (e) {}
+        }
+
+        function saveCurrentActiveVideoProgress() {
+            if (!currentLecture) return;
+            try {
+                if (isYouTubeActive && isPlayerReady && player && typeof player.getCurrentTime === 'function') {
+                    const t = player.getCurrentTime();
+                    const d = player.getDuration ? player.getDuration() : 0;
+                    saveLectureTime(currentLecture, t, d);
+                } else {
+                    const directEl = document.getElementById('directPlayer');
+                    if (directEl && directEl.style.display !== 'none' && !isNaN(directEl.currentTime)) {
+                        saveLectureTime(currentLecture, directEl.currentTime, directEl.duration);
+                    }
+                }
+            } catch (e) {}
+        }
+
+        function getSectionName(level) {
+            return level === 11 ? "مُقتطفات من المُحاضرات" : `المستوى ${level}`;
+        }
+
+        function disableYouTubeCaptions() {
+            if (!player) return;
+            try {
+                if (typeof player.unloadModule === 'function') {
+                    player.unloadModule('captions');
+                    player.unloadModule('cc');
+                }
+                if (typeof player.setOption === 'function') {
+                    player.setOption('captions', 'track', {});
+                    player.setOption('cc', 'track', {});
+                }
+            } catch (e) {}
+        }
+
+        function applyVolumeToPlayers(vol) {
+            const clamped = Math.max(0, Math.min(100, Number(vol) || 0));
+            currentVolume = clamped;
+            if (clamped > 0) lastNonZeroVolume = clamped;
+
+            const slider = document.getElementById('volumeSlider');
+            const percentText = document.getElementById('volumePercentText');
+            const muteBtn = document.getElementById('muteToggleBtn');
+
+            if (slider) slider.value = clamped;
+            if (percentText) percentText.innerText = `${clamped}%`;
+            if (muteBtn) {
+                if (clamped === 0) muteBtn.innerText = '🔇';
+                else if (clamped < 50) muteBtn.innerText = '🔉';
+                else muteBtn.innerText = '🔊';
+            }
+
+            try {
+                if (isYouTubeActive && isPlayerReady && player) {
+                    if (clamped === 0 && typeof player.mute === 'function') {
+                        player.mute();
+                    } else if (typeof player.unMute === 'function') {
+                        player.unMute();
+                    }
+                    if (typeof player.setVolume === 'function') {
+                        player.setVolume(clamped);
+                    }
+                }
+                const directEl = document.getElementById('directPlayer');
+                if (directEl) {
+                    directEl.volume = clamped / 100;
+                    directEl.muted = clamped === 0;
+                }
+            } catch (e) {}
+        }
+
+        function onVolumeChange(val) {
+            applyVolumeToPlayers(val);
+        }
+
+        function toggleMute() {
+            if (currentVolume > 0) {
+                applyVolumeToPlayers(0);
+            } else {
+                applyVolumeToPlayers(lastNonZeroVolume || 100);
+            }
+        }
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('ytPlayer', {
+                videoId: '',
+                playerVars: {
+                    'playsinline': 1,
+                    'rel': 0,
+                    'modestbranding': 1,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'fs': 0,
+                    'cc_load_policy': 0,
+                    'iv_load_policy': 3,
+                    'hl': 'ar'
+                },
+                events: {
+                    'onReady': () => {
+                        isPlayerReady = true;
+                        disableYouTubeCaptions();
+                        applyVolumeToPlayers(currentVolume);
+                        startProgressTracker();
+                    },
+                    'onStateChange': (event) => {
+                        disableYouTubeCaptions();
+                        onPlayerStateChange(event);
+                    }
+                }
+            });
+        }
+
+        function isInFullscreen() {
+            return Boolean(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+        }
+
+        function showFullscreenControlsTemporarily() {
+            const stage = document.getElementById('playerStage');
+            if (!stage) return;
+            stage.classList.remove('controls-hidden');
+            if (fullscreenHideTimer) clearTimeout(fullscreenHideTimer);
+            if (isInFullscreen()) {
+                fullscreenHideTimer = setTimeout(() => {
+                    if (isInFullscreen() && !isDraggingSlider) {
+                        stage.classList.add('controls-hidden');
+                    }
+                }, 3000);
+            }
+        }
+
+        function handleFullscreenChange() {
+            const stage = document.getElementById('playerStage');
+            const fsBtn = document.getElementById('fullscreenBtn');
+            const activeFs = isInFullscreen();
+            if (fsBtn) {
+                fsBtn.innerText = activeFs ? '🗗 تصغير الشاشة' : '⛶ ملء الشاشة';
+            }
+            if (stage) {
+                if (activeFs) {
+                    showFullscreenControlsTemporarily();
+                } else {
+                    stage.classList.remove('controls-hidden');
+                    if (fullscreenHideTimer) clearTimeout(fullscreenHideTimer);
+                }
+            }
+        }
+
+        window.onload = function() {
+            navigateTo({ type: 'home' }, false);
+
+            const stage = document.getElementById('playerStage');
+            if (stage) {
+                stage.addEventListener('mousemove', showFullscreenControlsTemporarily);
+                stage.addEventListener('touchstart', showFullscreenControlsTemporarily, { passive: true });
+            }
+
+            document.addEventListener('fullscreenchange', handleFullscreenChange);
+            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+            document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+            window.addEventListener('mouseup', () => {
+                if (isDraggingSlider) {
+                    setScrubShieldState(false);
+                }
+            });
+            window.addEventListener('touchend', () => {
+                if (isDraggingSlider) {
+                    setScrubShieldState(false);
+                }
+            });
+
+            window.addEventListener('beforeunload', saveCurrentActiveVideoProgress);
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') {
+                    saveCurrentActiveVideoProgress();
+                }
+            });
+
+            const directEl = document.getElementById('directPlayer');
+            if (directEl) {
+                directEl.volume = currentVolume / 100;
+                directEl.addEventListener('loadedmetadata', () => {
+                    if (pendingResumeTime && pendingResumeTime > 0 && pendingResumeTime < directEl.duration) {
+                        directEl.currentTime = pendingResumeTime;
+                        pendingResumeTime = null;
+                    }
+                    document.getElementById('durationText').innerText = formatTime(directEl.duration);
+                });
+                directEl.addEventListener('timeupdate', () => {
+                    if (currentLecture && !isYouTubeActive) {
+                        saveLectureTime(currentLecture, directEl.currentTime, directEl.duration);
+                        if (!isDraggingSlider && directEl.duration > 0) {
+                            document.getElementById('currentTimeText').innerText = formatTime(directEl.currentTime);
+                            document.getElementById('progressSlider').value = (directEl.currentTime / directEl.duration) * 100;
+                        }
+                    }
+                });
+                directEl.addEventListener('pause', saveCurrentActiveVideoProgress);
+            }
+        };
+
+        function closeAllDropdowns() {
+            document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+        }
+
+        function setScrubShieldState(active) {
+            const shield = document.getElementById('scrubPreviewShield');
+            if (shield) {
+                shield.classList.toggle('active', active);
+            }
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sideDrawer').classList.toggle('open');
+            document.getElementById('drawerOverlay').classList.toggle('open');
+        }
+
+        function toggleDropdown(event, dropdownId) {
+            if (event) event.stopPropagation();
+            const dropdown = document.getElementById(dropdownId);
+            if (!dropdown) return;
+            const isOpen = dropdown.classList.contains('active');
+            closeAllDropdowns();
+            if (!isOpen) dropdown.classList.add('active');
+        }
+
+        function exitExpandedReader() {
+            const card = document.getElementById('videoSectionWrapper');
+            card.classList.remove('expanded-reader');
+            const btn = document.getElementById('frameExpandBtn');
+            if (btn) btn.innerText = '⛶ تكبير صفحة العرض للقراءة';
+        }
+
+        function setFrameExpandButtonVisible(visible) {
+            const btn = document.getElementById('frameExpandBtn');
+            if (btn) {
+                btn.style.display = visible ? 'inline-flex' : 'none';
+                if (!visible) {
+                    btn.innerText = '⛶ تكبير صفحة العرض للقراءة';
+                }
+            }
+        }
+
+        function toggleResourceExpand() {
+            const section = document.getElementById('videoSectionWrapper');
+            const btn = document.getElementById('frameExpandBtn');
+            const isExpanded = section.classList.toggle('expanded-reader');
+            if (btn) {
+                btn.innerText = isExpanded ? '✕ تصغير صفحة العرض' : '⛶ تكبير صفحة العرض للقراءة';
+            }
+        }
+
+        function isSameState(a, b) {
+            if (!a || !b) return false;
+            return a.type === b.type &&
+                (a.lang || null) === (b.lang || null) &&
+                (a.level || null) === (b.level || null) &&
+                (a.key || null) === (b.key || null) &&
+                (a.lectureId || null) === (b.lectureId || null);
+        }
+
+        function updateBackButtonState() {
+            const container = document.getElementById('backBtnContainer');
+            const btn = document.getElementById('backActionBtn');
+            if (!container || !btn) return;
+
+            container.style.display = 'block';
+            const canGoBack = historyStack.length > 1 || document.getElementById('videoSectionWrapper').classList.contains('expanded-reader');
+            btn.disabled = !canGoBack;
+            btn.classList.toggle('disabled-state', !canGoBack);
+        }
+
+        function stopCurrentPlayback() {
+            saveCurrentActiveVideoProgress();
+            try {
+                if (isYouTubeActive && player && typeof player.pauseVideo === 'function') {
+                    player.pauseVideo();
+                }
+                const directEl = document.getElementById('directPlayer');
+                if (directEl && !directEl.paused) {
+                    directEl.pause();
+                }
+            } catch (e) {}
+        }
+
+        function navigateTo(state, pushHistory = true) {
+            exitExpandedReader();
+            setScrubShieldState(false);
+            isDraggingSlider = false;
+            closeAllDropdowns();
+
+            if (state.type !== 'player') {
+                stopCurrentPlayback();
+            }
+            
+            document.getElementById('homeProfileCard').style.display = 'none';
+            document.getElementById('levelsSelectionPanel').style.display = 'none';
+            document.getElementById('levelLecturesPanel').style.display = 'none';
+            document.getElementById('specialContentPanel').style.display = 'none';
+            document.getElementById('videoSectionWrapper').style.display = 'none';
+            document.getElementById('playlistSectionWrapper').style.display = 'none';
+
+            if (state.type === 'home') {
+                document.getElementById('homeProfileCard').style.display = 'block';
+                document.getElementById('currentActiveLangLabel').innerText = "الصفحة الرئيسية";
+                document.getElementById('levelIndicator').innerText = "مرحباً بكم";
+                if (historyStack.length === 0) {
+                    historyStack = [{ type: 'home' }];
+                } else if (pushHistory && !isSameState(historyStack[historyStack.length - 1], { type: 'home' })) {
+                    historyStack.push({ type: 'home' });
+                }
+            } else if (state.type === 'levels') {
+                document.getElementById('levelsSelectionPanel').style.display = 'block';
+                document.getElementById('currentActiveLangLabel').innerText = `اللغة الحالية: ${state.lang === 'greek' ? 'اللغة اليونانية' : 'اللغة القبطية'}`;
+                document.getElementById('levelIndicator').innerText = "اختر مستوى دراسي";
+                if (pushHistory && !isSameState(historyStack[historyStack.length - 1], state)) {
+                    historyStack.push(state);
+                }
+            } else if (state.type === 'level_lectures') {
+                document.getElementById('levelLecturesPanel').style.display = 'block';
+                const langName = state.lang === 'greek' ? 'اللغة اليونانية' : 'اللغة القبطية';
+                const sectionName = getSectionName(state.level);
+                document.getElementById('currentActiveLangLabel').innerText = langName;
+                document.getElementById('levelIndicator').innerText = `${langName} • ${sectionName}`;
+                if (pushHistory && !isSameState(historyStack[historyStack.length - 1], state)) {
+                    historyStack.push(state);
+                }
+            } else if (state.type === 'special') {
+                document.getElementById('specialContentPanel').style.display = 'block';
+                document.getElementById('currentActiveLangLabel').innerText = "المكتبة والمراجع";
+                document.getElementById('levelIndicator').innerText = "";
+                if (pushHistory && !isSameState(historyStack[historyStack.length - 1], state)) {
+                    historyStack.push(state);
+                }
+            } else if (state.type === 'player') {
+                document.getElementById('videoSectionWrapper').style.display = 'block';
+                document.getElementById('playlistSectionWrapper').style.display = 'block';
+                if (pushHistory && !isSameState(historyStack[historyStack.length - 1], state)) {
+                    historyStack.push(state);
+                }
+            }
+
+            updateBackButtonState();
+        }
+
+        function showHomePage(pushHistory = true) { navigateTo({ type: 'home' }, pushHistory); }
+
+        function openLevelsPage(lang) {
+            currentLang = lang;
+            navigateTo({ type: 'levels', lang: lang });
+            document.getElementById('levelsSelectionTitle').innerText = `اختر المستوى الدراسي (${lang === 'greek' ? 'اللغة اليونانية' : 'اللغة القبطية'})`;
+            const gridContainer = document.getElementById('levelsGridContainer');
+            gridContainer.innerHTML = '';
+            for (let i = 1; i <= 11; i++) {
+                const box = document.createElement('div');
+                box.className = 'level-box-card';
+                box.innerText = getSectionName(i);
+                box.onclick = () => selectLevelAndLoad(i);
+                gridContainer.appendChild(box);
+            }
+        }
+
+        function selectLevelAndLoad(level) {
+            currentLevel = level;
+            navigateTo({ type: 'level_lectures', lang: currentLang, level: level });
+            fetchLevelLecturesList();
+        }
+
+        async function fetchLevelLecturesList() {
+            const sectionName = getSectionName(currentLevel);
+            const langName = currentLang === 'greek' ? "اللغة اليونانية" : "اللغة القبطية";
+            document.getElementById('levelLecturesTitle').innerText = `${langName} - ${sectionName}`;
+            const body = document.getElementById('levelLecturesListBody');
+            body.innerHTML = '<p style="text-align:center; color:var(--text-gray); padding:1.5rem;">جاري تحميل المحاضرات...</p>';
+
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/lectures?language=eq.${currentLang}&level=eq.${currentLevel}&select=*&order=title.asc`, {
+                    method: 'GET',
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+                });
+                const data = await response.json();
+                currentLecturesList = (data || []).filter(item => !item.books_sites || item.books_sites.trim() === '');
+                renderLevelLecturesCards();
+            } catch (e) {
+                body.innerHTML = '<p style="text-align:center; color:red; padding:1.5rem;">تعذر جلب المحاضرات</p>';
+            }
+        }
+
+        function renderLevelLecturesCards() {
+            const body = document.getElementById('levelLecturesListBody');
+            if (currentLecturesList.length === 0) {
+                body.innerHTML = '<p style="text-align:center; color:var(--text-gray); padding:1.5rem;">لا توجد محاضرات مضافة في هذا المستوى حالياً.</p>';
+                return;
+            }
+
+            const grid = document.createElement('div');
+            grid.className = 'level-lectures-grid';
+
+            currentLecturesList.forEach((lec, idx) => {
+                const reviewed = isLectureReviewed(lec);
+                const savedSec = getSavedLectureTime(lec);
+
+                const card = document.createElement('div');
+                card.className = `lecture-overview-card ${reviewed ? 'reviewed-card' : ''}`;
+
+                const header = document.createElement('div');
+                header.className = 'lecture-overview-header';
+                const resumeHtml = savedSec > 0 ? `<div class="resume-badge">⏱ توقفت عند ${formatTime(savedSec)}</div>` : '';
+                header.innerHTML = `<h3>${lec.title}</h3><span>${lec.lecture_date || 'محاضرة دراسية • د. جرجس بشري'}</span>${resumeHtml}`;
+
+                const actions = document.createElement('div');
+                actions.className = 'lecture-overview-actions';
+
+                const contentsBtn = document.createElement('button');
+                contentsBtn.type = 'button';
+                contentsBtn.className = 'lec-btn-contents';
+                contentsBtn.innerText = '📋 عرض محتويات المحاضرة';
+
+                const watchBtn = document.createElement('button');
+                watchBtn.type = 'button';
+                watchBtn.className = 'lec-btn-watch';
+                watchBtn.innerText = savedSec > 0 ? '▶️ استكمال المشاهدة' : '▶️ مشاهدة المحاضرة';
+                watchBtn.onclick = () => openLecturePlayer(lec);
+
+                const reviewBtn = document.createElement('button');
+                reviewBtn.type = 'button';
+                reviewBtn.className = `lec-btn-review ${reviewed ? 'is-reviewed' : ''}`;
+                reviewBtn.innerHTML = reviewed ? '✅ تمت المُراجعة' : '⬜ تمت المُراجعة';
+                reviewBtn.onclick = () => {
+                    const nowReviewed = toggleLectureReviewed(lec);
+                    card.classList.toggle('reviewed-card', nowReviewed);
+                    reviewBtn.classList.toggle('is-reviewed', nowReviewed);
+                    reviewBtn.innerHTML = nowReviewed ? '✅ تمت المُراجعة' : '⬜ تمت المُراجعة';
+                };
+
+                const contentsBox = document.createElement('div');
+                contentsBox.className = 'lecture-inline-contents';
+                contentsBox.id = `lecInlineContents_${idx}`;
+                const topicsText = (lec.pdf_url && lec.pdf_url.trim() !== '')
+                    ? lec.pdf_url.trim()
+                    : 'لم يتم إضافة تفاصيل لمحتويات هذه المحاضرة بعد.';
+                contentsBox.textContent = topicsText;
+
+                contentsBtn.onclick = () => {
+                    const isOpen = contentsBox.classList.toggle('open');
+                    contentsBtn.classList.toggle('active', isOpen);
+                    contentsBtn.innerText = isOpen ? '🔼 إخفاء محتويات المحاضرة' : '📋 عرض محتويات المحاضرة';
+                };
+
+                actions.appendChild(contentsBtn);
+                actions.appendChild(watchBtn);
+
+                card.appendChild(header);
+                card.appendChild(actions);
+                card.appendChild(reviewBtn);
+                card.appendChild(contentsBox);
+                grid.appendChild(card);
+            });
+
+            body.innerHTML = '';
+            body.appendChild(grid);
+        }
+
+        function openLecturePlayer(lec) {
+            navigateTo({
+                type: 'player',
+                lang: currentLang,
+                level: currentLevel,
+                lectureId: lec.youtube_id || lec.title
+            });
+
+            const sectionName = getSectionName(currentLevel);
+            const langName = currentLang === 'greek' ? "اللغة اليونانية" : "اللغة القبطية";
+            document.getElementById('levelIndicator').innerText = `${langName} • ${sectionName}`;
+            document.getElementById('playlistHeader').innerText = currentLevel === 11 ? sectionName : `محاضرات ${sectionName}`;
+            document.getElementById('playlistCount').innerText = `${currentLecturesList.length} محاضرة`;
+
+            document.getElementById('playlistSectionWrapper').style.display = 'block';
+            document.getElementById('videoControlsBar').style.display = 'flex';
+            document.getElementById('resourceEmbedViewer').style.display = 'none';
+            setFrameExpandButtonVisible(false);
+
+            loadLecture(lec);
+        }
+
+        async function showSpecialPage(pageKey) {
+            navigateTo({ type: 'special', key: pageKey });
+            const body = document.getElementById('specialPanelBody');
+            
+            let pageTitle = "المكتبة والمراجع";
+            let targetLang = pageKey.includes('greek') ? 'greek' : 'coptic';
+            const isLookingForBooks = pageKey.includes('books');
+
+            if (pageKey === 'books-coptic') pageTitle = "كُتب اللغة القبطية (اللهجة البحيرية)";
+            else if (pageKey === 'books-greek') pageTitle = "كُتب اللغة اليونانية";
+            else if (pageKey === 'dicts-greek') pageTitle = "مواقع وقواميس اللغة اليونانية";
+            else if (pageKey === 'dicts-coptic') pageTitle = "مواقع وقواميس اللغة القبطية";
+
+            body.innerHTML = `<h2>${pageTitle}</h2><p style="color:var(--text-gray);">جاري تحميل المراجع...</p>`;
+
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/lectures?language=eq.${targetLang}&select=*`, {
+                    method: 'GET',
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+                });
+
+                const data = await response.json();
+                const validItems = (data || []).filter(item => item.books_sites && item.books_sites.trim() !== '');
+
+                const items = validItems.filter(item => {
+                    const urlLower = item.books_sites.toLowerCase();
+                    const titleLower = item.title.toLowerCase();
+                    const isItemBook = urlLower.includes('.pdf') || titleLower.includes('كتاب') || titleLower.includes('قواعد') || titleLower.includes('مدخل');
+                    return isLookingForBooks ? isItemBook : !isItemBook;
+                });
+
+                let html = `<h2>${pageTitle}</h2>`;
+                if (items.length === 0) {
+                    html += `<p style="margin-top:1rem; color:var(--text-gray);">لا توجد عناصر مضافة في هذا القسم حالياً.</p>`;
+                } else {
+                    html += `<div style="margin-top:1.5rem;">`;
+                    items.forEach(item => {
+                        const btnText = isLookingForBooks ? '📖 قراءة' : '🌐 تصفح';
+                        html += `
+                            <div class="resource-card">
+                                <div>
+                                    <strong>${item.title}</strong>
+                                </div>
+                                <button onclick='openResourceInViewer(${JSON.stringify(item)})'>${btnText}</button>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                }
+                body.innerHTML = html;
+            } catch (e) {
+                body.innerHTML = `<h2>${pageTitle}</h2><p style="color:red; margin-top:1rem;">تعذر جلب البيانات من القاعدة.</p>`;
+            }
+        }
+
+        function formatEmbedUrl(rawUrl) {
+            let url = rawUrl.trim();
+            if (url.includes('drive.google.com')) {
+                url = url
+                    .replace('/view?usp=drive_link', '/preview')
+                    .replace('/view?usp=sharing', '/preview')
+                    .replace('/edit?usp=sharing', '/preview');
+                if (!url.includes('/preview')) {
+                    url = url.replace(/\/view(\?.*)?$/, '/preview').replace(/\/edit(\?.*)?$/, '/preview');
+                }
+            }
+            if (url.toLowerCase().includes('.pdf') && !url.includes('#')) {
+                url += '#toolbar=0&navpanes=0&scrollbar=1';
+            }
+            return url;
+        }
+
+        function openResourceInViewer(item) {
+            navigateTo({ type: 'player', lang: item.language, level: 1, resourceTitle: item.title });
+            
+            document.getElementById('ytPlayer').style.display = 'none';
+            document.getElementById('directPlayer').style.display = 'none';
+            document.getElementById('clickShield').style.display = 'none';
+            document.getElementById('videoControlsBar').style.display = 'none';
+            document.getElementById('playlistSectionWrapper').style.display = 'none';
+            document.getElementById('playerReviewBtn').style.display = 'none';
+            setFrameExpandButtonVisible(true);
+
+            const embedViewer = document.getElementById('resourceEmbedViewer');
+            embedViewer.style.display = 'block';
+            embedViewer.src = formatEmbedUrl(item.books_sites);
+
+            document.getElementById('lectureTag').innerText = item.language === 'greek' ? "اللغة اليونانية - عارض المراجع" : "اللغة القبطية - عارض المراجع";
+            document.getElementById('lectureTitle').innerText = item.title;
+            document.getElementById('lectureDate').innerText = "للقراءة والتصفح فقط داخل نفس الصفحة";
+            document.getElementById('lessonTopicsBox').style.display = 'none';
+        }
+
+        function goBack() {
+            if (document.getElementById('videoSectionWrapper').classList.contains('expanded-reader')) {
+                exitExpandedReader();
+                updateBackButtonState();
+                return;
+            }
+            if (historyStack.length > 1) {
+                historyStack.pop();
+                const previousState = historyStack[historyStack.length - 1];
+                if (!previousState || previousState.type === 'home') {
+                    navigateTo({ type: 'home' }, false);
+                } else if (previousState.type === 'levels') {
+                    currentLang = previousState.lang;
+                    navigateTo(previousState, false);
+                    openLevelsPage(previousState.lang);
+                } else if (previousState.type === 'level_lectures') {
+                    currentLang = previousState.lang;
+                    currentLevel = previousState.level;
+                    navigateTo(previousState, false);
+                    if (currentLecturesList.length > 0) {
+                        const sectionName = getSectionName(currentLevel);
+                        const langName = currentLang === 'greek' ? "اللغة اليونانية" : "اللغة القبطية";
+                        document.getElementById('levelLecturesTitle').innerText = `${langName} - ${sectionName}`;
+                        renderLevelLecturesCards();
+                    } else {
+                        fetchLevelLecturesList();
+                    }
+                } else if (previousState.type === 'special') {
+                    navigateTo(previousState, false);
+                    showSpecialPage(previousState.key);
+                } else if (previousState.type === 'player') {
+                    currentLang = previousState.lang;
+                    currentLevel = previousState.level;
+                    navigateTo(previousState, false);
+                    if (currentLecture) {
+                        openLecturePlayer(currentLecture);
+                    }
+                }
+            }
+            updateBackButtonState();
+        }
+
+        function renderLecturesList(lectures) {
+            const stack = document.getElementById('lecturesStack');
+            stack.innerHTML = '';
+            if (lectures.length === 0) {
+                stack.innerHTML = `<p style="text-align:center; color:var(--text-gray); padding:1.5rem 0;">لم يتم إضافة محاضرات</p>`;
+                return;
+            }
+            lectures.forEach(lec => {
+                const reviewed = isLectureReviewed(lec);
+                const savedSec = getSavedLectureTime(lec);
+                const card = document.createElement('div');
+                card.className = `lec-card ${currentLecture && getLectureStorageId(currentLecture) === getLectureStorageId(lec) ? 'active' : ''} ${reviewed ? 'reviewed-card' : ''}`;
+                card.onclick = () => {
+                    saveCurrentActiveVideoProgress();
+                    loadLecture(lec);
+                };
+
+                const topDiv = document.createElement('div');
+                topDiv.className = 'lec-card-top';
+                const timeInfo = savedSec > 0 ? ` • ⏱ ${formatTime(savedSec)}` : '';
+                topDiv.innerHTML = `<div><h4>${lec.title}</h4><span>${(lec.lecture_date || 'محاضرة دراسية')}${timeInfo}</span></div>`;
+
+                const miniBtn = document.createElement('button');
+                miniBtn.type = 'button';
+                miniBtn.className = `mini-review-btn ${reviewed ? 'is-reviewed' : ''}`;
+                miniBtn.innerHTML = reviewed ? '✅ تمت المُراجعة' : '⬜ تمت المُراجعة';
+                miniBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    toggleLectureReviewed(lec);
+                    renderLecturesList(lectures);
+                    updatePlayerReviewButton();
+                };
+
+                card.appendChild(topDiv);
+                card.appendChild(miniBtn);
+                stack.appendChild(card);
+            });
+        }
+
+        function extractYouTubeId(url) {
+            if (!url) return '';
+            if (url.includes('youtu.be/')) return url.split('youtu.be/')[1]?.split('?')[0];
+            if (url.includes('watch?v=')) return url.split('watch?v=')[1]?.split('&')[0];
+            if (url.includes('/embed/')) return url.split('/embed/')[1]?.split('?')[0];
+            if (url.length === 11 && !url.includes('/')) return url;
+            return '';
+        }
+
+        function loadLecture(lec) {
+            if (currentLecture && getLectureStorageId(currentLecture) !== getLectureStorageId(lec)) {
+                saveCurrentActiveVideoProgress();
+            }
+
+            currentLecture = lec;
+            const savedSeconds = getSavedLectureTime(lec);
+            pendingResumeTime = savedSeconds > 0 ? savedSeconds : null;
+
+            renderLecturesList(currentLecturesList);
+            const rawUrl = lec.youtube_id ? lec.youtube_id.trim() : '';
+            const ytEl = document.getElementById('ytPlayer');
+            const directEl = document.getElementById('directPlayer');
+            const embedViewer = document.getElementById('resourceEmbedViewer');
+
+            embedViewer.style.display = 'none';
+            setFrameExpandButtonVisible(false);
+            document.getElementById('videoControlsBar').style.display = 'flex';
+            document.getElementById('clickShield').style.display = 'flex';
+
+            const reviewBtn = document.getElementById('playerReviewBtn');
+            if (reviewBtn) {
+                reviewBtn.style.display = 'inline-flex';
+                updatePlayerReviewButton();
+            }
+
+            if (rawUrl.includes('youtube.com') || rawUrl.includes('youtu.be') || extractYouTubeId(rawUrl)) {
+                isYouTubeActive = true;
+                ytEl.style.display = 'block';
+                directEl.style.display = 'none';
+                const ytId = extractYouTubeId(rawUrl);
+                if (isPlayerReady && player && player.loadVideoById) {
+                    player.loadVideoById({
+                        videoId: ytId,
+                        startSeconds: savedSeconds > 0 ? savedSeconds : 0
+                    });
+                    applyVolumeToPlayers(currentVolume);
+                    disableYouTubeCaptions();
+                }
+            } else {
+                isYouTubeActive = false;
+                ytEl.style.display = 'none';
+                directEl.style.display = 'block';
+                directEl.src = rawUrl;
+                directEl.volume = currentVolume / 100;
+                directEl.muted = currentVolume === 0;
+            }
+
+            document.getElementById('lectureTag').innerText = `${currentLang === 'greek' ? "اللغة اليونانية" : "اللغة القبطية"} - ${getSectionName(currentLevel)}`;
+            document.getElementById('lectureTitle').innerText = lec.title;
+            document.getElementById('lectureDate').innerText = lec.lecture_date || 'د. جرجس بشري';
+
+            const topicsBox = document.getElementById('lessonTopicsBox');
+            const topicsContent = document.getElementById('lessonTopicsContent');
+            if (lec.pdf_url && lec.pdf_url.trim() !== '') {
+                topicsContent.textContent = lec.pdf_url.trim();
+                topicsBox.style.display = 'block';
+            } else { topicsBox.style.display = 'none'; }
+        }
+
+        function onPlayerStateChange(event) {
+            const shield = document.getElementById('clickShield');
+            const icon = document.getElementById('centerPlayIcon');
+            if (event.data === YT.PlayerState.PLAYING) {
+                shield.classList.add('playing');
+                icon.innerText = '❚❚';
+                applyVolumeToPlayers(currentVolume);
+                if (pendingResumeTime && pendingResumeTime > 0 && player && typeof player.seekTo === 'function') {
+                    const current = player.getCurrentTime ? player.getCurrentTime() : 0;
+                    if (Math.abs(current - pendingResumeTime) > 3) {
+                        player.seekTo(pendingResumeTime, true);
+                    }
+                    pendingResumeTime = null;
+                }
+            } else {
+                shield.classList.remove('playing');
+                icon.innerText = '▶';
+                if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                    saveCurrentActiveVideoProgress();
+                }
+            }
+        }
+
+        function startProgressTracker() {
+            if (progressInterval) clearInterval(progressInterval);
+            progressInterval = setInterval(() => {
+                if (isYouTubeActive && isPlayerReady && player && typeof player.getDuration === 'function') {
+                    const duration = player.getDuration();
+                    const currentTime = player.getCurrentTime();
+                    if (duration > 0) {
+                        document.getElementById('durationText').innerText = formatTime(duration);
+                        if (!isDraggingSlider) {
+                            document.getElementById('currentTimeText').innerText = formatTime(currentTime);
+                            document.getElementById('progressSlider').value = (currentTime / duration) * 100;
+                        }
+                        if (currentLecture && player.getPlayerState && player.getPlayerState() === YT.PlayerState.PLAYING) {
+                            saveLectureTime(currentLecture, currentTime, duration);
+                        }
+                    }
+                }
+            }, 500);
+        }
+
+        function formatTime(secs) {
+            secs = Math.max(0, Math.floor(Number(secs) || 0));
+            const h = Math.floor(secs / 3600);
+            const m = Math.floor((secs % 3600) / 60);
+            const s = secs % 60;
+            if (h > 0) {
+                return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            }
+            return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        function onSliderInput(percent) {
+            isDraggingSlider = true;
+            setScrubShieldState(true);
+            showFullscreenControlsTemporarily();
+            if (isYouTubeActive && player && player.getDuration) {
+                const targetTime = (percent / 100) * player.getDuration();
+                document.getElementById('currentTimeText').innerText = formatTime(targetTime);
+            } else {
+                const directEl = document.getElementById('directPlayer');
+                if (directEl && directEl.duration) {
+                    const targetTime = (percent / 100) * directEl.duration;
+                    document.getElementById('currentTimeText').innerText = formatTime(targetTime);
+                }
+            }
+        }
+
+        function onSliderChange(percent) {
+            isDraggingSlider = false;
+            setScrubShieldState(false);
+            showFullscreenControlsTemporarily();
+            if (isYouTubeActive && player && player.getDuration) {
+                const targetTime = (percent / 100) * player.getDuration();
+                player.seekTo(targetTime, true);
+                if (currentLecture) {
+                    saveLectureTime(currentLecture, targetTime, player.getDuration());
+                }
+            } else {
+                const directEl = document.getElementById('directPlayer');
+                if (directEl && directEl.duration) {
+                    const targetTime = (percent / 100) * directEl.duration;
+                    directEl.currentTime = targetTime;
+                    if (currentLecture) {
+                        saveLectureTime(currentLecture, targetTime, directEl.duration);
+                    }
+                }
+            }
+        }
+
+        function togglePlayPause() {
+            if (isYouTubeActive && player) {
+                if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                    player.pauseVideo();
+                    saveCurrentActiveVideoProgress();
+                } else {
+                    player.playVideo();
+                }
+            } else {
+                const directEl = document.getElementById('directPlayer');
+                if (directEl) {
+                    if (directEl.paused) directEl.play();
+                    else directEl.pause();
+                }
+            }
+        }
+
+        function handleShieldClick(event) {
+            if (event) event.stopPropagation();
+            if (isInFullscreen()) {
+                showFullscreenControlsTemporarily();
+            }
+            if (clickToggleTimer) clearTimeout(clickToggleTimer);
+            clickToggleTimer = setTimeout(() => {
+                togglePlayPause();
+                clickToggleTimer = null;
+            }, 220);
+        }
+
+        function handleShieldDoubleClick(event) {
+            if (event) event.stopPropagation();
+            if (clickToggleTimer) {
+                clearTimeout(clickToggleTimer);
+                clickToggleTimer = null;
+            }
+            toggleFullscreen();
+        }
+
+        function seekVideo(secs) {
+            if (isYouTubeActive && player && typeof player.getCurrentTime === 'function') {
+                const newTime = Math.max(0, player.getCurrentTime() + secs);
+                player.seekTo(newTime, true);
+                if (currentLecture && player.getDuration) {
+                    saveLectureTime(currentLecture, newTime, player.getDuration());
+                }
+            } else {
+                const directEl = document.getElementById('directPlayer');
+                if (directEl) {
+                    const newTime = Math.max(0, directEl.currentTime + secs);
+                    directEl.currentTime = newTime;
+                    if (currentLecture && directEl.duration) {
+                        saveLectureTime(currentLecture, newTime, directEl.duration);
+                    }
+                }
+            }
+        }
+
+        function toggleFullscreen() {
+            const embedViewer = document.getElementById('resourceEmbedViewer');
+            const isResourceMode = embedViewer && embedViewer.style.display !== 'none';
+
+            if (isResourceMode) {
+                toggleResourceExpand();
+                return;
+            }
+
+            const stage = document.getElementById('playerStage') || document.getElementById('videoBox');
+            if (!isInFullscreen()) {
+                if (stage.requestFullscreen) {
+                    stage.requestFullscreen();
+                } else if (stage.webkitRequestFullscreen) {
+                    stage.webkitRequestFullscreen();
+                } else if (stage.msRequestFullscreen) {
+                    stage.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
